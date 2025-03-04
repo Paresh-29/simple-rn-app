@@ -1,19 +1,18 @@
-import { View, Text, StyleSheet } from 'react-native';
-
+import { View, Text, StyleSheet } from "react-native";
 
 const NoteItem = ({ note }) => {
 	return (
 		<View style={styles.noteItem}>
-			<Text style={styles.noteText}>{note.title}</Text>
+			<Text style={styles.noteText}>{note.text}</Text>
 		</View>
 	);
-}
+};
 
 const styles = StyleSheet.create({
 	noteItem: {
-		flexDirection: 'row',
-		justifyContent: 'space-between',
-		backgroundColor: '#fff',
+		flexDirection: "row",
+		justifyContent: "space-between",
+		backgroundColor: "#fff",
 		padding: 15,
 		borderRadius: 5,
 		marginVertical: 5,
@@ -21,6 +20,6 @@ const styles = StyleSheet.create({
 	noteText: {
 		fontSize: 18,
 	},
-})
+});
 
 export default NoteItem;
