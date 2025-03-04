@@ -13,6 +13,56 @@ const notesService = {
 
 		return { data: response };
 	},
+
+	async createNote(text) {
+		if (!text) {
+			return { error: "Note text is required" };
+		}
+
+		const data = {
+			text: text,
+			createdAt: new Date().toISOString(),
+		};
+
+		const response = await databaseService.createDocument(
+			dbId,
+			collectionId,
+			data,
+			ID.unique(),
+		);
+		if (response?.error) {
+			return { error: response.error };
+		}
+
+		return { data: response };
+	},
+	async updateNote(noteId, text) {
+		const response = await databaseService.updateDocument(
+			dbId,
+			collectionId,
+			noteId,
+			{
+				text,
+			},
+		);
+
+		if (response.error) {
+			return { error: response.error };
+		}
+		return { data: response };
+	},
+	async deleteNote(noteId) {
+		const response = await databaseService.deleteDocument(
+			dbId,
+			collectionId,
+			noteId,
+		);
+		if (response.error) {
+			return { error: response.error };
+		}
+
+		return { success: true };
+	},
 };
 
 export default notesService;
