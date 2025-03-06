@@ -39,7 +39,7 @@ const NotesScreen = () => {
 
   const fetchNotes = async () => {
     setLoading(true);
-    const response = await notesService.getNotes();
+    const response = await notesService.getNotes(user.$id);
     console.log(response.data);
 
     if (response.error) {
@@ -56,7 +56,7 @@ const NotesScreen = () => {
   const addNote = async () => {
     if (newNote.trim() === "") return;
 
-    const response = await notesService.createNote(newNote);
+    const response = await notesService.createNote(user.$id, newNote);
 
     if (response.error) {
       Alert.alert("Error", response.error);
@@ -127,7 +127,11 @@ const NotesScreen = () => {
               {error}
             </Text>
           )}
-          <NoteList notes={notes} onDelete={deleteNote} onEdit={updateNote} />
+          {notes.length === 0 ? (
+            <Text style={styles.noNoteText}>No Notes</Text>
+          ) : (
+            <NoteList notes={notes} onDelete={deleteNote} onEdit={updateNote} />
+          )}
         </>
       )}
       <TouchableOpacity
@@ -168,6 +172,13 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 18,
     fontWeight: "bold",
+  },
+  noNoteText: {
+    textAlign: "center",
+    fontSize: 16,
+    fontWeight: "bold",
+    color: "gray",
+    marginTop: 20,
   },
 });
 
